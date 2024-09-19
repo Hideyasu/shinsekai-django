@@ -1,0 +1,1 @@
+# shinsekai-django
