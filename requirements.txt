@@ -1,2 +1,7 @@
 Django
 djangorestframework
+torch>=1.7.1
+pydub
+transformers
+openai==0.27.8
+python-dotenv
