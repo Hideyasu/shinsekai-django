@@ -5,3 +5,4 @@ pydub
 transformers
 openai==0.27.8
 python-dotenv
+django-cors-headers

@@ -13,7 +13,6 @@ model = whisper.load_model('base')
 
 # OpenAI APIキーの設定
 openai.api_key = os.getenv("OPENAI_API_KEY") # 環境変数からAPIキーを取得
-
 @csrf_exempt
 def transcribe_audio(request):
     if request.method == 'POST':
@@ -39,20 +38,22 @@ def transcribe_audio(request):
         # ChatGPTにテキストを送信して本当の感情を推測
         try:
             prompt = f"以下の文章の話者が本当に感じている感情や意図を推測して、漫画の吹き出しのような一言を発言して：\n\n{text}"
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "あなたはかぐや様は告らせたいに登場する四宮かぐやです"},
-                    {"role": "user", "content": prompt}
-                ],
-                max_tokens=100,
-                temperature=0.7,
-            )
-            gpt_response = response['choices'][0]['message']['content'].strip()
+            print("openai")
+            # response = openai.ChatCompletion.create(
+            #     model="gpt-3.5-turbo",
+            #     messages=[
+            #         {"role": "system", "content": "あなたはかぐや様は告らせたいに登場する四宮かぐやです"},
+            #         {"role": "user", "content": prompt}
+            #     ],
+            #     max_tokens=100,
+            #     temperature=0.7,
+            # )
+            # gpt_response = response['choices'][0]['message']['content'].strip()
         except Exception as e:
             return JsonResponse({'error': f'ChatGPT API呼び出し中にエラーが発生しました: {str(e)}'}, status=500)
 
-        return JsonResponse({'text': text, 'gpt_response': gpt_response}, json_dumps_params={'ensure_ascii': False})
+        # return JsonResponse({'text': text, 'gpt_response': gpt_response}, json_dumps_params={'ensure_ascii': False})
+        return JsonResponse({'emotion': "AAAAA"})
     else:
         return JsonResponse({'error': '無効なリクエストメソッドです。'}, status=405)
 
