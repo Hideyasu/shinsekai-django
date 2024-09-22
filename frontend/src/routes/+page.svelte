@@ -55,6 +55,7 @@
 
 				if (response.ok) {
 					console.log('音声ファイルが正常に送信されました');
+					console.log('body:', response.body);
 				} else {
 					console.error('ファイル送信に失敗しました');
 				}

@@ -36,29 +36,27 @@ def transcribe_audio(request):
         # ChatGPTにテキストを送信して本当の感情を推測
         try:
             prompt = f"以下の文章の話者が本当に感じている感情や意図を推測して、漫画の吹き出しのような一言を発言して：\n\n{text}"
-            print("openai:client")
-            print(os.environ.get("OPENAI_API_KEY"))
             client = OpenAI(
                 # This is the default and can be omitted
                 api_key=os.environ.get("OPENAI_API_KEY"),
             )
-            print("openai")
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "あなたはかぐや様は告らせたいに登場する四宮かぐやです"},
+                    {"role": "system", "content": "あなたはかぐや様は告らせたいに登場する四宮かぐやです。本当は、好きな人に告白したいと思っています。"},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=100,
                 temperature=0.7,
+                n=10,
             )
-            gpt_response = response.choices[0].message.content.strip()
+            gpt_responses = [choice.message.content.strip() for choice in response.choices]
         except Exception as e:
             print(e)
             return JsonResponse({'error': f'ChatGPT API呼び出し中にエラーが発生しました: {str(e)}'}, status=500)
 
-        # return JsonResponse({'text': text, 'gpt_response': gpt_response}, json_dumps_params={'ensure_ascii': False})
-        return JsonResponse({'emotion': "AAAAA"})
+        print(gpt_responses)
+        return JsonResponse({'text': text, 'gpt_responses': gpt_responses}, json_dumps_params={'ensure_ascii': False})
     else:
         return JsonResponse({'error': '無効なリクエストメソッドです。'}, status=405)
 
