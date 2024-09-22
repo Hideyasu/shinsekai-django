@@ -48,12 +48,12 @@
 			formData.append('audio', audioBlob, 'recording.mp3');
 
 			try {
-				const response = await fetch('http://127.0.0.1:8080/api/v1/transcribe/', {
+				const emotion_response = await fetch('http://127.0.0.1:8080/api/v1/emotion/',{
 					method: 'POST',
 					body: formData
 				});
 
-				if (response.ok) {
+				if (emotion_response.ok) {
 					console.log('音声ファイルが正常に送信されました');
 				} else {
 					console.error('ファイル送信に失敗しました');

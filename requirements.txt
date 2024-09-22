@@ -6,3 +6,6 @@ transformers
 openai
 python-dotenv
 django-cors-headers
+joblib
+pyaudio
+librosa
