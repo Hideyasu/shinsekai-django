@@ -1,6 +1,7 @@
 # ベースイメージとしてpython:3を使用
 FROM python:3
 
+EXPOSE 8080
 # Whisperと音声処理のためにffmpegをインストール
 RUN apt-get update && apt-get install -y ffmpeg
 
@@ -21,4 +22,4 @@ RUN pip install openai-whisper
 # プロジェクトファイルをコンテナにコピー
 ADD . /code/
 
-CMD python3 manage.py runserver 0.0.0.0:8000
+CMD python3 manage.py runserver 0.0.0.0:8080
